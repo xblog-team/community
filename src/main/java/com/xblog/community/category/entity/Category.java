@@ -1,6 +1,7 @@
 package com.xblog.community.category.entity;
 
 import com.xblog.community.party.entity.Party;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,11 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "party_id")
     private Party party;
+
+    @Builder
+    public Category(Long categoryId, String categoryName, Party party) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.party = party;
+    }
 }
