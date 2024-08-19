@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -37,7 +39,17 @@ public class User {
     @Column(name = "password_change_date")
     private LocalDateTime passwordChangeDate;
 
-    private Boolean enabled;
+    private Boolean enabled = true;
 
-    private Boolean withdraw;
+    private Boolean withdraw = false;
+
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = LocalDateTime.now();
+
+        if (this.passwordChangeDate == null) {
+            this.passwordChangeDate = LocalDateTime.now();
+        }
+    }
+
 }

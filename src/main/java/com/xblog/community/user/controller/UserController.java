@@ -8,11 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xblog.community.user.dto.LoginInfoResponseDto;
+import com.xblog.community.user.dto.RegisterUserRequestDto;
+import com.xblog.community.user.dto.RegisterUserResponseDto;
 import com.xblog.community.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +34,11 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+    
+    @PostMapping("/register")
+    public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody RegisterUserRequestDto registerUserRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(registerUserRequestDto));
     }
     
 }
