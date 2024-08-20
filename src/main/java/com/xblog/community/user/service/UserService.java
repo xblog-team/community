@@ -12,7 +12,7 @@ public interface UserService {
     RegisterUserResponseDto createUser(RegisterUserRequestDto registerUserRequestDto);
 
     void withdrawUser(String userId);
-    void disableUser(String userId);
+    void disableOrEnableUser(String userId);
 
     void updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto);
 

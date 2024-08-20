@@ -1,11 +1,13 @@
 package com.xblog.community.user.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.xblog.community.exception.UserAlreadyExistsException;
+import com.xblog.community.exception.UserDoesNotExistException;
 import com.xblog.community.user.dto.LoginInfoResponseDto;
 import com.xblog.community.user.dto.RegisterUserRequestDto;
 import com.xblog.community.user.dto.RegisterUserResponseDto;
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService{
             return null;
         }
 
-        return new LoginInfoResponseDto(user.getUserId(), user.getPassword(), userRoleRepository.findByUserId(userId));
+        return new LoginInfoResponseDto(user.getUserId(), user.getPassword(), userRoleRepository.getByUserId(userId));
     }
 
     @Override
@@ -67,32 +69,69 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void withdrawUser(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'withdrawUser'");
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (Objects.isNull(user)) {
+            throw new UserDoesNotExistException();
+        }
+
+        user.setWithdraw(true);
+        user.setWithdrawedAt(LocalDateTime.now());
+        userRepository.save(user);
     }
 
     @Override
-    public void disableUser(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'disableUser'");
+    public void disableOrEnableUser(String userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (Objects.isNull(user)) {
+            throw new UserDoesNotExistException();
+        }
+        
+        if (user.getEnabled()) {
+            user.setEnabled(false);
+        }else{
+            user.setEnabled(true);
+        }
+        userRepository.save(user);
     }
 
     @Override
     public void updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePassword'");
+        User user = userRepository.findById(updatePasswordRequestDto.getUserId()).orElse(null);
+
+        if (Objects.isNull(user)) {
+            throw new UserDoesNotExistException();
+        }else if (user.getPassword().equals(updatePasswordRequestDto.getOldPassword())) {
+            user.setPassword(updatePasswordRequestDto.getNewPassword());
+            user.setPasswordChangeDate(LocalDateTime.now());
+            userRepository.save(user);
+        }
+        
     }
 
     @Override
     public void changeNickname(String userId, String newNickname) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeNickname'");
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (Objects.isNull(user)) {
+            throw new UserDoesNotExistException();
+        }
+        
+        user.setNickname(newNickname);
+        userRepository.save(user);
     }
 
     @Override
     public void changeAuthority(String userId, Short authorityId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeAuthority'");
+        UserRole userRole = userRoleRepository.findByUserId(userId);
+
+        if (Objects.isNull(userRole)) {
+            throw new UserDoesNotExistException();
+        }
+        
+        userRole.setAuthorityId(authorityId);;
+        userRoleRepository.save(userRole);
     }
 
 }
