@@ -70,4 +70,9 @@ public class CategoryService {
                 newCategory.getParty().getPartyId()
         );
     }
+
+    public void deleteCategory(long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
+        categoryRepository.delete(category);
+    }
 }
