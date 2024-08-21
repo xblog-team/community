@@ -34,8 +34,8 @@ public class User {
     private LocalDateTime passwordChangeDate;
 
     @Column(name = "enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     @Column(name = "withdraw")
-    private boolean withdraw;
+    private Boolean withdraw;
 }
