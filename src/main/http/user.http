@@ -17,4 +17,33 @@ Content-Type: application/json
     "authorityId": 1
 }
 
-###
+###유저 닉네임 변경
+PUT {{baseUrl}}/change-nickname?newNickname=azzzzz
+Content-Type: application/json
+X-USER-ID: testUser
+
+###유저 권한 변경
+PUT {{baseUrl}}/change-auth?newAuth=2
+Content-Type: application/json
+X-USER-ID: testUser
+
+###유저 비밀번호 변경
+PUT {{baseUrl}}/change-password
+Content-Type: application/json
+X-USER-ID: testUser
+
+{
+    "userId": "testUser",
+    "oldPassword": "test",
+    "newPassword": "test1"
+}
+
+###유저 휴면/비휴면으로 변경
+PUT {{baseUrl}}/disable-or-enable
+Content-Type: application/json
+X-USER-ID: testUser
+
+###유저 탈퇴로 변경
+PUT {{baseUrl}}/withdraw
+Content-Type: application/json
+X-USER-ID: testUser

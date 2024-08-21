@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @SuppressWarnings("null")
 public class CommonConfig {
-
+    
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -25,4 +25,18 @@ public class CommonConfig {
             }
         };
     }
+
+    // @Bean
+    // public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+    //     return httpSecurity
+    //             .cors().disable()
+    //             .csrf().disable()
+    //             .formLogin().disable()
+    //             .logout().disable()
+    //             .httpBasic().disable()
+    //             .authorizeRequests().antMatchers("/**").permitAll()
+    //             .anyRequest().permitAll()
+    //             .and()
+    //             .build();
+    // }
 }

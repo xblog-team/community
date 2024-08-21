@@ -1,11 +1,18 @@
 package com.xblog.community.user.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.xblog.community.authority.entity.Authority;
+import com.xblog.community.authority.repository.AuthorityRepository;
+import com.xblog.community.exception.IncorrectPassword;
 import com.xblog.community.exception.UserAlreadyExistsException;
 import com.xblog.community.exception.UserDoesNotExistException;
 import com.xblog.community.user.dto.LoginInfoResponseDto;
@@ -24,46 +31,51 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     
-    private UserRepository userRepository;
-    private UserRoleRepository userRoleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public LoginInfoResponseDto getLoginInfo(String userId) {
         
-        User user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserDoesNotExistException());
+        
+        List<UserRole> userRoles = userRoleRepository.getByUserId(userId);
 
-        if(Objects.isNull(user)){
-            return null;
-        }
-
-        return new LoginInfoResponseDto(user.getUserId(), user.getPassword(), userRoleRepository.getByUserId(userId));
+        List<String> roleList = userRoles.stream()
+        .map(userRole -> authorityRepository.findById(userRole.getAuthorityId())
+            .map(Authority::getAuthority)
+            .orElseThrow(() -> new IllegalStateException("권한 존재하지 않습니다.")))
+        .collect(Collectors.toList());
+        
+        return new LoginInfoResponseDto(user.getUserId(), user.getPassword(), roleList);
     }
 
     @Override
     public Boolean userExists(String userId) {
         return userRepository.existsById(userId);
     }
-
+    
+    @Transactional
     @Override
     public RegisterUserResponseDto createUser(RegisterUserRequestDto registerUserRequestDto) {
         
-        UserRole userRole = new UserRole();
-        userRole.setAuthorityId(registerUserRequestDto.getAuthorityId());
-        userRole.setUserId(registerUserRequestDto.getUserId());
-        userRoleRepository.save(userRole);
-
+        if (userExists(registerUserRequestDto.getUserId())) {
+            throw new UserAlreadyExistsException();
+        }
+        
         User user = new User();
         user.setUserId(registerUserRequestDto.getUserId());
         user.setNickname(registerUserRequestDto.getNickname());
         user.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
-        
-        if (userExists(user.getUserId())) {
-            throw new UserAlreadyExistsException();
-        }
-
         userRepository.save(user);
 
+        UserRole userRole = new UserRole();
+        userRole.setAuthorityId(registerUserRequestDto.getAuthorityId());
+        userRole.setUserId(registerUserRequestDto.getUserId());
+        userRoleRepository.save(userRole);
+        
         return new RegisterUserResponseDto(user.getUserId(),user.getNickname());
     }
 
@@ -102,10 +114,12 @@ public class UserServiceImpl implements UserService{
 
         if (Objects.isNull(user)) {
             throw new UserDoesNotExistException();
-        }else if (user.getPassword().equals(updatePasswordRequestDto.getOldPassword())) {
-            user.setPassword(updatePasswordRequestDto.getNewPassword());
+        }else if (passwordEncoder.matches(updatePasswordRequestDto.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(updatePasswordRequestDto.getNewPassword()));
             user.setPasswordChangeDate(LocalDateTime.now());
             userRepository.save(user);
+        }else{
+            throw new IncorrectPassword();
         }
         
     }
@@ -124,7 +138,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void changeAuthority(String userId, Short authorityId) {
-        UserRole userRole = userRoleRepository.findByUserId(userId);
+        UserRole userRole = userRoleRepository.findByUserId(userId).orElse(null);
 
         if (Objects.isNull(userRole)) {
             throw new UserDoesNotExistException();

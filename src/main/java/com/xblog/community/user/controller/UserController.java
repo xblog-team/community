@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xblog.community.user.dto.LoginInfoResponseDto;
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
 
 @RestController
 @RequiredArgsConstructor
@@ -64,13 +63,13 @@ public class UserController {
     }
 
     @PutMapping("/change-nickname")
-    public ResponseEntity<Void> changeNickname(@RequestHeader("X-USER-ID") String userId, @RequestBody String newNickname) {
+    public ResponseEntity<Void> changeNickname(@RequestHeader("X-USER-ID") String userId, @RequestParam String newNickname) {
         userService.changeNickname(userId, newNickname);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/change-auth")
-    public ResponseEntity<Void> changeAuth(@RequestHeader("X-USER-ID") String userId, @RequestBody Short newAuth) {
+    public ResponseEntity<Void> changeAuth(@RequestHeader("X-USER-ID") String userId, @RequestParam Short newAuth) {
         userService.changeAuthority(userId, newAuth);
         return ResponseEntity.ok().build();
     }
