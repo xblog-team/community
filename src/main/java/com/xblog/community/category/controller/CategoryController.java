@@ -11,37 +11,37 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/category")
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping
+    @PostMapping("/category")
     public ResponseEntity<Void> addCategory(@RequestBody AddCategoryRequest dto) {
         categoryService.createCategory(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("/category/{categoryId}")
     public ResponseEntity<GetCategoryResponse> getCategory(@PathVariable long categoryId) {
-        GetCategoryResponse body = categoryService.viewCaegory(categoryId);
+        GetCategoryResponse body = categoryService.viewCategory(categoryId);
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    @GetMapping("/{partyId}")
+    @GetMapping("/categories/{partyId}")
     public ResponseEntity<List<GetCategoryResponse>> getCategoryByPartyId(@PathVariable long partyId) {
         List<GetCategoryResponse> list = categoryService.getCategoryList(partyId);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @PutMapping("/{categoryId}")
+    @PutMapping("/category/{categoryId}")
     public ResponseEntity<ModifyCategoryDto> putCategory(@RequestBody ModifyCategoryDto dto, @PathVariable long categoryId) {
         ModifyCategoryDto body = categoryService.modifyCategory(dto, categoryId);
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/category/{categoryId}")
     public ResponseEntity<Void> deleteCategory(@PathVariable long categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.status(HttpStatus.OK).build();
