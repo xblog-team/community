@@ -1,0 +1,31 @@
+### GET request to example server
+POST http://localhost:8080/api/post
+Content-Type: application/json
+X-User-Id: infinity
+
+{
+  "content": "영국 놀러가는데 추천 받습니다~ 맛있는 찻집 있나요?",
+  "categoryId": 6
+}
+
+###
+GET http://localhost:8080/api/post/2
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/posts/6
+Content-Type: application/json
+
+###
+PUT http://localhost:8080/api/post/1
+Content-Type: application/json
+X-User-Id: infinity
+
+{
+  "content": "현대에서 신차 나온대, 맞음?",
+  "categoryId": 2
+}
+
+###
+DELETE http://localhost:8080/api/post/1
+Content-Type: application/json
