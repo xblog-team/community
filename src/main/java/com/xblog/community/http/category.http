@@ -1,0 +1,29 @@
+### GET request to example server
+POST http://localhost:8080/api/category
+Content-Type: application/json
+
+{
+  "categoryName": "수입품 차",
+  "partyId": 2
+}
+
+###
+GET http://localhost:8080/api/category/3
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/categories/2
+Content-Type: application/json
+
+###
+PUT http://localhost:8080/api/category/1
+Content-Type: application/json
+
+{
+  "categoryName": "외제차",
+  "partyId": 1
+}
+
+###
+DELETE http://localhost:8080/api/category/1
+Content-Type: application/json
