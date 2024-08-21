@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "party")
@@ -15,6 +12,7 @@ import javax.persistence.Table;
 @Getter
 public class Party {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "party_id")
     private long partyId;
 
