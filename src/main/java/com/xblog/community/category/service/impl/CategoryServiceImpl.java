@@ -30,8 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .categoryName(dto.getCategoryName())
                 .party(party)
                 .build();
-        Category newCategory = categoryRepository.save(category);
-        newCategory.getCategoryId();
+        categoryRepository.save(category);
     }
 
     public GetCategoryResponse viewCategory(long categoryId) {
@@ -57,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public ModifyCategoryDto modifyCategory(ModifyCategoryDto dto, long categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
+        categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         Party party = partyRepository.findById(dto.getPartyId()).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾을 수 없습니다."));
 
         Category modifyCategory = Category.builder()
