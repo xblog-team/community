@@ -3,7 +3,7 @@ POST http://localhost:8080/api/category
 Content-Type: application/json
 
 {
-  "categoryName": "수입품 차",
+  "categoryName": "전통 차",
   "partyId": 2
 }
 

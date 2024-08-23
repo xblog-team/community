@@ -1,15 +1,16 @@
-### GET request to example server
+### POST request to example server
 POST http://localhost:8080/api/post
 Content-Type: application/json
 X-User-Id: infinity
 
 {
-  "content": "영국 놀러가는데 추천 받습니다~ 맛있는 찻집 있나요?",
-  "categoryId": 6
+  "title" : "전통 차 추천 좀 ㅠㅠ",
+  "content": "여름에 마시기 좋은 전통차 뭐가 있을까요?",
+  "categoryId": 8
 }
 
-###
-GET http://localhost:8080/api/post/2
+### GET
+GET http://localhost:8080/api/post/1
 Content-Type: application/json
 
 ###
@@ -22,7 +23,8 @@ Content-Type: application/json
 X-User-Id: infinity
 
 {
-  "content": "현대에서 신차 나온대, 맞음?",
+  "title" : "이번에 신차",
+  "content": "현대에서 신차 나온대, 맞음??",
   "categoryId": 2
 }
 

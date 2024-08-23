@@ -34,13 +34,16 @@ public class PostServiceImpl implements PostService {
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(()-> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
 
         Post post = Post.builder()
-                .category(category)
+                .title(dto.getTitle())
                 .content(dto.getContent())
+                .views(0L)
+                .category(category)
                 .user(user)
                 .build();
         Post newPost = postReposiotry.save(post);
 
         return new AddPostDto(
+                newPost.getTitle(),
                 newPost.getContent(),
                 newPost.getCategory().getCategoryId()
         );
@@ -48,11 +51,16 @@ public class PostServiceImpl implements PostService {
 
     public GetPostResponse viewPost(Long postId) {
         Post post = postReposiotry.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
+        post.updateView();
+        Post newPost = postReposiotry.save(post);
+
         return new GetPostResponse(
-                post.getPostId(),
-                post.getContent(),
-                post.getCategory().getCategoryId(),
-                post.getUser().getUserId()
+                newPost.getPostId(),
+                newPost.getTitle(),
+                newPost.getContent(),
+                newPost.getViews(),
+                newPost.getCategory().getCategoryId(),
+                newPost.getUser().getUserId()
         );
     }
 
@@ -64,7 +72,9 @@ public class PostServiceImpl implements PostService {
         for (Post post : postList) {
             GetPostResponse getPost = new GetPostResponse(
                     post.getPostId(),
+                    post.getTitle(),
                     post.getContent(),
+                    post.getViews(),
                     post.getCategory().getCategoryId(),
                     post.getUser().getUserId());
             responseList.add(getPost);
@@ -73,19 +83,23 @@ public class PostServiceImpl implements PostService {
     }
 
     public ModifyPostResponse modifyPost(ModifyPostRequeset dto, Long postId, String userId) {
-        postReposiotry.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
+        Post p = postReposiotry.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId + "라는 사용자를 찾을 수 없습니다."));
         Post post = Post.builder()
                 .postId(postId)
                 .category(category)
+                .title(dto.getTitle())
                 .content(dto.getContent())
                 .user(user)
+                .views(p.getViews())
                 .build();
         Post modifyPost = postReposiotry.save(post);
         return new ModifyPostResponse(
                 modifyPost.getPostId(),
+                modifyPost.getTitle(),
                 modifyPost.getContent(),
+                modifyPost.getViews(),
                 modifyPost.getCategory().getCategoryId(),
                 modifyPost.getUser().getUserId()
         );
