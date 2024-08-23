@@ -16,8 +16,14 @@ public class Post {
     @Column(name = "post_id")
     private Long postId;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "content")
     private String content;
+
+    @Column(name = "views")
+    private Long views;
 
     @OneToOne
     @JoinColumn(name = "category_id")
@@ -28,10 +34,16 @@ public class Post {
     private User user;
 
     @Builder
-    public Post(Long postId, String content, Category category, User user) {
+    public Post(Long postId, String title, String content, Long views, Category category, User user) {
         this.postId = postId;
+        this.title = title;
         this.content = content;
+        this.views = views;
         this.category = category;
         this.user = user;
+    }
+
+    public void updateView() {
+        views++;
     }
 }
