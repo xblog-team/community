@@ -6,8 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetPostResponse {
-    public Long postId;
-    public String content;
-    public Long CategoryId;
-    public String userId;
+    private Long postId;
+    private String title;
+    private String content;
+    private Long views;
+    private Long CategoryId;
+    private String userId;
 }
