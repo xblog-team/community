@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AddPostDto {
-    public String content;
-    public Long categoryId;
+    private String title;
+    private String content;
+    private Long categoryId;
 }
