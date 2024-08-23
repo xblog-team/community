@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ModifyCategoryDto {
-    public String categoryName;
-    public Long partyId;
+    private String categoryName;
+    private Long partyId;
 }

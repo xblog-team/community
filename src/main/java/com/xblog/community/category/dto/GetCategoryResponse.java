@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class GetCategoryResponse {
-    public Long categoryId;
-    public String categoryName;
-    public Long partyId;
+    private Long categoryId;
+    private String categoryName;
+    private Long partyId;
 }
