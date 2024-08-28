@@ -2,7 +2,7 @@ package com.xblog.community.post.controller;
 
 import com.xblog.community.post.dto.AddPostDto;
 import com.xblog.community.post.dto.GetPostResponse;
-import com.xblog.community.post.dto.ModifyPostRequeset;
+import com.xblog.community.post.dto.ModifyPostRequest;
 import com.xblog.community.post.dto.ModifyPostResponse;
 import com.xblog.community.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<ModifyPostResponse> putPost(@RequestBody ModifyPostRequeset dto, @PathVariable Long postId, @RequestHeader("X-User-Id") String userId) {
+    public ResponseEntity<ModifyPostResponse> putPost(@RequestBody ModifyPostRequest dto, @PathVariable Long postId, @RequestHeader("X-User-Id") String userId) {
         ModifyPostResponse body = postService.modifyPost(dto, postId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }

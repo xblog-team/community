@@ -5,7 +5,7 @@ import com.xblog.community.category.exception.CategoryNotFoundException;
 import com.xblog.community.category.repository.CategoryRepository;
 import com.xblog.community.post.dto.AddPostDto;
 import com.xblog.community.post.dto.GetPostResponse;
-import com.xblog.community.post.dto.ModifyPostRequeset;
+import com.xblog.community.post.dto.ModifyPostRequest;
 import com.xblog.community.post.dto.ModifyPostResponse;
 import com.xblog.community.post.entity.Post;
 import com.xblog.community.post.exception.PostNotFoundException;
@@ -82,7 +82,7 @@ public class PostServiceImpl implements PostService {
         return responseList;
     }
 
-    public ModifyPostResponse modifyPost(ModifyPostRequeset dto, Long postId, String userId) {
+    public ModifyPostResponse modifyPost(ModifyPostRequest dto, Long postId, String userId) {
         Post p = postReposiotry.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId + "라는 사용자를 찾을 수 없습니다."));
