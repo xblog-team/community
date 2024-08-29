@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ModifyPostRequeset {
+public class ModifyPostRequest {
     private String title;
     private String content;
     private Long categoryId;
