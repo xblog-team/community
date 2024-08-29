@@ -1,0 +1,48 @@
+@baseUrl = http://localhost:8090/api/userparty
+
+### party내의 모든 멤버 다 가져오기
+GET {{baseUrl}}/1
+Content-Type: application/json
+
+### party manager 불러오기
+GET {{baseUrl}}/1/managers
+Content-Type: application/json
+
+### party 일반 유저 불러오기
+GET {{baseUrl}}/1/members
+Content-Type: application/json
+
+### party 강퇴 유저 불러오기
+GET {{baseUrl}}/1/banned
+Content-Type: application/json
+
+### party 유저 초대
+POST {{baseUrl}}/invite
+Content-Type: application/json
+
+{
+    "userId": "testUser",
+    "partyId": 1,
+    "role": "MEMBER"
+}
+
+###유저 party 승인
+PUT {{baseUrl}}/1/approve
+Content-Type: application/json
+X-USER-ID: testUser
+
+###유저 party에서 강퇴 처리
+PUT {{baseUrl}}/1/kick?userId=testUser
+Content-Type: application/json
+
+### party 생성
+POST {{baseUrl}}/create?partyName=testParty&isPrivate=true
+Content-Type: application/json
+
+###party 이름 바꾸기
+PUT {{baseUrl}}/1/name?newPartyName=testPartyNew
+Content-Type: application/json
+
+###party 이름 바꾸기
+PUT {{baseUrl}}/1/privacy?isPrivate=false
+Content-Type: application/json
