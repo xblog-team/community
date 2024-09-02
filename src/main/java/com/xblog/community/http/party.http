@@ -27,9 +27,8 @@ Content-Type: application/json
 }
 
 ###유저 party 승인
-PUT {{baseUrl}}/1/approve
+PUT {{baseUrl}}/1/approve?userId=testUser
 Content-Type: application/json
-X-USER-ID: testUser
 
 ###유저 party에서 강퇴 처리
 PUT {{baseUrl}}/1/kick?userId=testUser
@@ -43,6 +42,6 @@ Content-Type: application/json
 PUT {{baseUrl}}/1/name?newPartyName=testPartyNew
 Content-Type: application/json
 
-###party 이름 바꾸기
+###party 공개
 PUT {{baseUrl}}/1/privacy?isPrivate=false
 Content-Type: application/json

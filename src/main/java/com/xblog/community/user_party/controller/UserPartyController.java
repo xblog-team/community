@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -58,7 +56,7 @@ public class UserPartyController {
     }
 
     @PutMapping("/{partyId}/approve")
-    public ResponseEntity<Void> approveUser(@PathVariable("partyId") Long partyId, @RequestHeader("X-USER-ID") String userId) {
+    public ResponseEntity<Void> approveUser(@PathVariable("partyId") Long partyId, @RequestParam String userId) {
         userPartyService.approveUser(userId, partyId);
         return ResponseEntity.ok().build();
     }
