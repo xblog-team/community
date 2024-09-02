@@ -3,6 +3,9 @@ package com.xblog.community.post.service.impl;
 import com.xblog.community.category.entity.Category;
 import com.xblog.community.category.exception.CategoryNotFoundException;
 import com.xblog.community.category.repository.CategoryRepository;
+import com.xblog.community.party.entity.Party;
+import com.xblog.community.party.exception.PartyNotFoundException;
+import com.xblog.community.party.repository.PartyRepository;
 import com.xblog.community.post.dto.AddPostDto;
 import com.xblog.community.post.dto.GetPostResponse;
 import com.xblog.community.post.dto.ModifyPostRequest;
@@ -28,6 +31,7 @@ public class PostServiceImpl implements PostService {
     private final PostReposiotry postReposiotry;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final PartyRepository partyRepository;
 
     public AddPostDto createPost(AddPostDto dto, String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId + "라는 사용자를 찾을 수 없습니다."));
@@ -70,6 +74,27 @@ public class PostServiceImpl implements PostService {
         List<GetPostResponse> responseList = new ArrayList<>();
 
         for (Post post : postList) {
+            GetPostResponse getPost = new GetPostResponse(
+                    post.getPostId(),
+                    post.getTitle(),
+                    post.getContent(),
+                    post.getViews(),
+                    post.getCategory().getCategoryId(),
+                    post.getUser().getUserId());
+            responseList.add(getPost);
+        }
+        return responseList;
+    }
+
+    @Override
+    public List<GetPostResponse> getPostListByViews(Long partyId) {
+        Party party = partyRepository.findById(partyId).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾지 못했습니다."));
+        List<Post> postList = postReposiotry.findByCategory_PartyOrderByViewsDesc(party);
+        List<GetPostResponse> responseList = new ArrayList<>();
+
+        for (int i = 0; i < 9; i++) {
+            Post post = postList.get(i);
+
             GetPostResponse getPost = new GetPostResponse(
                     post.getPostId(),
                     post.getTitle(),
