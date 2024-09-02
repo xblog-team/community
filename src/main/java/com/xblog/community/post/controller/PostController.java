@@ -30,6 +30,12 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
+    @GetMapping("/views/{partyId}")
+    public ResponseEntity<List<GetPostResponse>> getPostByPartyId(@PathVariable Long partyId){
+        List<GetPostResponse> dto = postService.getPostListByViews(partyId);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
     @GetMapping("/post-categories/{categoryId}")
     public ResponseEntity<List<GetPostResponse>> getPostByCategory(@PathVariable Long categoryId){
         List<GetPostResponse> list = postService.getPostList(categoryId);
