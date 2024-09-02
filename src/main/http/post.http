@@ -1,5 +1,5 @@
 ### POST request to example server
-POST http://localhost:8080/api/post
+POST http://localhost:8090/api/posts
 Content-Type: application/json
 X-User-Id: infinity
 
@@ -10,15 +10,19 @@ X-User-Id: infinity
 }
 
 ### GET
-GET http://localhost:8080/api/post/1
+GET http://localhost:8090/api/posts/1
+Content-Type: application/json
+
+### GET
+GET http://localhost:8090/api/posts/views/2
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/api/posts/6
+GET http://localhost:8090/api/posts/post-categories/8
 Content-Type: application/json
 
 ###
-PUT http://localhost:8080/api/post/1
+PUT http://localhost:8090/api/posts/1
 Content-Type: application/json
 X-User-Id: infinity
 
@@ -29,5 +33,5 @@ X-User-Id: infinity
 }
 
 ###
-DELETE http://localhost:8080/api/post/1
+DELETE http://localhost:8090/api/posts/1
 Content-Type: application/json
