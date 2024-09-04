@@ -8,6 +8,8 @@ import com.xblog.community.user.dto.UpdatePasswordRequestDto;
 public interface UserService {
     LoginInfoResponseDto getLoginInfo(String userId);
 
+    String getUserNickname(String userId);
+
     Boolean userExists(String userId);
     RegisterUserResponseDto createUser(RegisterUserRequestDto registerUserRequestDto);
 

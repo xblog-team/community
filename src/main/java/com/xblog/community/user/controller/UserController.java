@@ -38,6 +38,12 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
+
+    @GetMapping("/nickname")
+    public ResponseEntity<String> getNickname(@RequestHeader("X-USER-ID") String userId) {
+        return ResponseEntity.ok().body(userService.getUserNickname(userId));
+    }
+    
     
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody RegisterUserRequestDto registerUserRequestDto) {

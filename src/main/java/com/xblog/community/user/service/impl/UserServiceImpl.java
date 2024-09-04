@@ -148,4 +148,9 @@ public class UserServiceImpl implements UserService{
         userRoleRepository.save(userRole);
     }
 
+    @Override
+    public String getUserNickname(String userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new UserDoesNotExistException()).getNickname();
+    }
+
 }

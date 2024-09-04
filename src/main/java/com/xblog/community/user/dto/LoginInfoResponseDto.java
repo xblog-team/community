@@ -13,6 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginInfoResponseDto {
     private String userId;
-    private String userPw;
-    private List<String> authorities;
+    private String password;
+    private List<String> roles;
 }
