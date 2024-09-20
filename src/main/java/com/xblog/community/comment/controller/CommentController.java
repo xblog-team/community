@@ -18,7 +18,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment")
-    public ResponseEntity<Void> addComment(@RequestHeader("X-User-Id")String userId, @RequestBody AddCommentRequest request) {
+    public ResponseEntity<Void> addComment(@RequestHeader("X-USER-ID")String userId, @RequestBody AddCommentRequest request) {
         commentService.createComment(userId, request);
         return ResponseEntity.ok().build();
     }
@@ -36,7 +36,7 @@ public class CommentController {
     }
 
     @PutMapping("/comment/{commentId}")
-    public ResponseEntity<GetCommentResponse> updateComment(@PathVariable("commentId") Long commentId, @RequestBody ModifyCommentRequest request, @RequestHeader("X-User-Id")String userId) {
+    public ResponseEntity<GetCommentResponse> updateComment(@PathVariable("commentId") Long commentId, @RequestBody ModifyCommentRequest request, @RequestHeader("X-USER-ID")String userId) {
         GetCommentResponse response = commentService.modifyComment(commentId, request, userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
