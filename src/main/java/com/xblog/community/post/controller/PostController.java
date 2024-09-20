@@ -19,7 +19,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<AddPostDto> addPost(@RequestBody AddPostDto dto, @RequestHeader("X-User-Id") String userId) {
+    public ResponseEntity<AddPostDto> addPost(@RequestBody AddPostDto dto, @RequestHeader("X-USER-ID") String userId) {
         AddPostDto body = postService.createPost(dto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
@@ -30,7 +30,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-    @GetMapping("/views/{partyId}")
+    @GetMapping("/all/{partyId}")
     public ResponseEntity<List<GetPostResponse>> getPostByPartyId(@PathVariable Long partyId){
         List<GetPostResponse> dto = postService.getPostListByViews(partyId);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
@@ -43,7 +43,7 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<ModifyPostResponse> putPost(@RequestBody ModifyPostRequest dto, @PathVariable Long postId, @RequestHeader("X-User-Id") String userId) {
+    public ResponseEntity<ModifyPostResponse> putPost(@RequestBody ModifyPostRequest dto, @PathVariable Long postId, @RequestHeader("X-USER-ID") String userId) {
         ModifyPostResponse body = postService.modifyPost(dto, postId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }

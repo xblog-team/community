@@ -92,7 +92,8 @@ public class PostServiceImpl implements PostService {
         List<Post> postList = postReposiotry.findByCategory_PartyOrderByViewsDesc(party);
         List<GetPostResponse> responseList = new ArrayList<>();
 
-        for (int i = 0; i < 9; i++) {
+        int size = postList.size() > 10 ? 9 : postList.size();
+        for (int i = 0; i < size; i++) {
             Post post = postList.get(i);
 
             GetPostResponse getPost = new GetPostResponse(
