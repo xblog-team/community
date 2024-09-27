@@ -16,7 +16,7 @@ public interface UserService {
     void withdrawUser(String userId);
     void disableOrEnableUser(String userId);
 
-    void updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto);
+    void updatePassword(String userId, UpdatePasswordRequestDto updatePasswordRequestDto);
 
     void changeNickname(String userId, String newNickname);
 

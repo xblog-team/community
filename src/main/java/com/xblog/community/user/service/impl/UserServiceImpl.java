@@ -109,8 +109,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto) {
-        User user = userRepository.findById(updatePasswordRequestDto.getUserId()).orElse(null);
+    public void updatePassword(String userId, UpdatePasswordRequestDto updatePasswordRequestDto) {
+        User user = userRepository.findById(userId).orElse(null);
 
         if (Objects.isNull(user)) {
             throw new UserDoesNotExistException();
