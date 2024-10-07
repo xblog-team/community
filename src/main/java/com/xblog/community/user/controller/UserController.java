@@ -22,6 +22,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PutMapping;
 
+/**
+ * 사용자 관련 요청을 처리하는 REST 컨트롤러입니다.
+ * 이 클래스는 사용자 정보 조회, 등록, 탈퇴, 비활성화 및 활성화, 비밀번호 및 닉네임 변경, 권한 변경과 관련된 API 엔드포인트를 제공합니다.
+ * 
+ * <p>주요 API 엔드포인트:</p>
+ * <ul>
+ *   <li>{@link #getUser(String)} - 특정 사용자 ID에 대한 로그인 정보를 조회합니다.</li>
+ *   <li>{@link #getNickname(String)} - 특정 사용자 ID에 대한 닉네임을 조회합니다.</li>
+ *   <li>{@link #registerUser(RegisterUserRequestDto)} - 새로운 사용자를 등록합니다.</li>
+ *   <li>{@link #withdrawUser(String)} - 특정 사용자 ID의 사용자를 탈퇴시킵니다.</li>
+ *   <li>{@link #disableOrEnableUser(String)} - 특정 사용자 ID의 사용자 계정을 비활성화 또는 활성화합니다.</li>
+ *   <li>{@link #changePassword(String, UpdatePasswordRequestDto)} - 특정 사용자 ID의 비밀번호를 변경합니다.</li>
+ *   <li>{@link #changeNickname(String, String)} - 특정 사용자 ID의 닉네임을 변경합니다.</li>
+ *   <li>{@link #changeAuth(String, Short)} - 특정 사용자 ID의 권한을 변경합니다.</li>
+ * </ul>
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
