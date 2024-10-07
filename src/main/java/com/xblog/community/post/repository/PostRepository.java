@@ -6,8 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PostReposiotry extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByCategory_CategoryId(Long categoryId);
 
+    List<Post> findByCategory_PartyOrderByPostIdDesc(Party party);
+
     List<Post> findByCategory_PartyOrderByViewsDesc(Party party);
+
+    List<Post> findByCategory_CategoryIdOrderByViewsDesc(Long categoryId);
 }
