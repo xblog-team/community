@@ -31,14 +31,26 @@ public class PostController {
     }
 
     @GetMapping("/all/{partyId}")
-    public ResponseEntity<List<GetPostResponse>> getPostByPartyId(@PathVariable Long partyId){
+    public ResponseEntity<List<GetPostResponse>> getPostByParty(@PathVariable Long partyId){
+        List<GetPostResponse> dto = postService.getPostListByParty(partyId);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
+    @GetMapping("/post-views/{partyId}")
+    public ResponseEntity<List<GetPostResponse>> getPostByViews(@PathVariable Long partyId){
         List<GetPostResponse> dto = postService.getPostListByViews(partyId);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @GetMapping("/post-categories/{categoryId}")
     public ResponseEntity<List<GetPostResponse>> getPostByCategory(@PathVariable Long categoryId){
-        List<GetPostResponse> list = postService.getPostList(categoryId);
+        List<GetPostResponse> list = postService.getPostListByCategory(categoryId);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
+    @GetMapping("/post-categories/{categoryId}/views")
+    public ResponseEntity<List<GetPostResponse>> getPostByCategoryAndViews(@PathVariable Long categoryId){
+        List<GetPostResponse> list = postService.getPostListByCategoryAndViews(categoryId);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
