@@ -21,6 +21,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * 사용자와 파티 관련 API 엔드포인트를 제공하는 컨트롤러 클래스입니다.
+ * 이 클래스는 파티의 구성원 관리, 초대, 승인 및 파티 생성과 같은 기능을 포함합니다.
+ * 
+ * <p>주요 엔드포인트:</p>
+ * <ul>
+ *   <li>{@code GET /api/userparty/{partyId}} - 특정 파티의 모든 구성원을 조회합니다.</li>
+ *   <li>{@code GET /api/userparty/{partyId}/managers} - 특정 파티의 관리자 목록을 조회합니다.</li>
+ *   <li>{@code GET /api/userparty/{partyId}/members} - 특정 파티의 일반 구성원 목록을 조회합니다.</li>
+ *   <li>{@code GET /api/userparty/{partyId}/banned} - 특정 파티에서 차단된 사용자를 조회합니다.</li>
+ *   <li>{@code POST /api/userparty/invite} - 파티에 사용자를 초대합니다.</li>
+ *   <li>{@code PUT /api/userparty/{partyId}/approve} - 파티에 사용자를 승인합니다.</li>
+ *   <li>{@code PUT /api/userparty/{partyId}/kick} - 파티에서 사용자를 퇴출합니다.</li>
+ *   <li>{@code POST /api/userparty/create} - 새로운 파티를 생성합니다.</li>
+ *   <li>{@code PUT /api/userparty/{partyId}/name} - 파티의 이름을 변경합니다.</li>
+ *   <li>{@code PUT /api/userparty/{partyId}/privacy} - 파티의 공개 여부를 변경합니다.</li>
+ * </ul>
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/userparty")
