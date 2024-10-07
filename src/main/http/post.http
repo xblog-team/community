@@ -1,7 +1,7 @@
 ### POST request to example server
 POST http://localhost:8090/api/posts
 Content-Type: application/json
-X-User-Id: infinity
+X-USER-ID: infinity
 
 {
   "title" : "전통 차 추천 좀 ㅠㅠ",
@@ -9,22 +9,30 @@ X-User-Id: infinity
   "categoryId": 8
 }
 
-### GET
+### GET 특정 post에 대한 모든 것 조회
 GET http://localhost:8090/api/posts/1
 Content-Type: application/json
 
-### GET
-GET http://localhost:8090/api/posts/views/2
+### GET 특정 그룹에 속하는 모든 post 중 최신순으로 9개 조회
+GET http://localhost:8090/api/posts/all/2
 Content-Type: application/json
 
-###
+### GET 특정 그룹에 속하는 모든 post 중 view 많은 순으로 9개 조회
+GET http://localhost:8090/api/posts/post-views/2
+Content-Type: application/json
+
+### GET 특정 category에 해당하는 모든 post 조회
 GET http://localhost:8090/api/posts/post-categories/8
 Content-Type: application/json
 
-###
+### GET 특정 category에 해당하는 모든 post view 많은 순으로 조회
+GET http://localhost:8090/api/posts/post-categories/8/views
+Content-Type: application/json
+
+### PUT 특정 post의 내용물 바꾸기
 PUT http://localhost:8090/api/posts/1
 Content-Type: application/json
-X-User-Id: infinity
+X-USER-ID: infinity
 
 {
   "title" : "이번에 신차",
@@ -32,6 +40,6 @@ X-User-Id: infinity
   "categoryId": 2
 }
 
-###
+### DELETE 특정 post 삭제
 DELETE http://localhost:8090/api/posts/1
 Content-Type: application/json
