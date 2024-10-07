@@ -64,7 +64,7 @@ public class UserController {
 
     @PutMapping("/change-password")
     public ResponseEntity<Void> changePassword(@RequestHeader("X-USER-ID") String userId, @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto) {
-        userService.updatePassword(updatePasswordRequestDto);
+        userService.updatePassword(userId, updatePasswordRequestDto);
         return ResponseEntity.ok().build();
     }
 
