@@ -1,0 +1,31 @@
+### GET request to example server
+GET http://localhost:8080/api/comment/1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/comments/3
+Content-Type: application/json
+
+###
+POST http://localhost:8080/api/comment
+Content-Type: application/json
+X-User-Id: aaa
+
+{
+  "comment": "The LastBookshop ㄱㄱ",
+  "postId": 3
+}
+
+###
+PUT http://localhost:8080/api/comment/1
+Content-Type: application/json
+X-User-Id: aaa
+
+{
+  "comment": "The LastBookshop 여기 추천",
+  "postId": 3
+}
+
+###
+DELETE http://localhost:8080/api/comment/1
+Content-Type:application/json
