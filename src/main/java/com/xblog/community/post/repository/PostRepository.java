@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * 게시물 관련 repository
+ * @author jihyeon
+ */
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByCategory_CategoryId(Long categoryId);
 

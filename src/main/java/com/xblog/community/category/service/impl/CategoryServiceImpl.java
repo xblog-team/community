@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 카테고리 관련 service
+ * @author jihyeon
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,6 +28,10 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final PartyRepository partyRepository;
 
+    /**
+     * 카테고리를 추가하는 method
+     * @param dto categoryName, partyId로 구성된 dto
+     */
     public void createCategory(AddCategoryRequest dto) {
         Party party = partyRepository.findById(dto.getPartyId()).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾을 수 없습니다."));
         Category category = Category.builder()
@@ -33,6 +41,11 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
     }
 
+    /**
+     * 특정 카테고리에 관한 내용을 조회하는 method
+     * @param categoryId 카테고리 아이디
+     * @return categoryId, categoryName, partyId로 구성된 dto
+     */
     public GetCategoryResponse viewCategory(long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         return new GetCategoryResponse(
@@ -42,6 +55,11 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
 
+    /**
+     * 특정 그룹에 속한 모든 카테고리들을 최신순으로 조회한 리스트들을 dto로 바꾸는 method
+     * @param partyId 그룹 아이디
+     * @return categoryId, categoryName, partyId로 구성된 dto 리스트
+     */
     public List<GetCategoryResponse> getCategoryList(long partyId) {
         List<Category> categories = categoryRepository.findByParty_PartyId(partyId);
         List<GetCategoryResponse> responses = new ArrayList<>();
@@ -55,6 +73,12 @@ public class CategoryServiceImpl implements CategoryService {
         return responses;
     }
 
+    /**
+     * 카테고리를 수정하는 dto
+     * @param dto categoryName, partyId로 구성된 dto
+     * @param categoryId 카테고리 아이디
+     * @return categoryName, partyId로 구성된 dto
+     */
     public ModifyCategoryDto modifyCategory(ModifyCategoryDto dto, long categoryId) {
         categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         Party party = partyRepository.findById(dto.getPartyId()).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾을 수 없습니다."));
@@ -72,6 +96,10 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
 
+    /**
+     * 카테고리를 삭제하는 method
+     * @param categoryId 카테고리 아이디
+     */
     public void deleteCategory(long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         categoryRepository.delete(category);

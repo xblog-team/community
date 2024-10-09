@@ -24,6 +24,10 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 게시물 관련 service
+ * @author jihyeon
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -33,6 +37,12 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final PartyRepository partyRepository;
 
+    /**
+     * 생성된 게시물을 AddPostDto로 전환하는 method
+     * @param dto title, content, categoryId로 구성된 dto
+     * @param userId 사용자 아이디
+     * @return title, content, categoryId로 구성된 dto
+     */
     public AddPostDto createPost(AddPostDto dto, String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId + "라는 사용자를 찾을 수 없습니다."));
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(()-> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
@@ -53,6 +63,11 @@ public class PostServiceImpl implements PostService {
         );
     }
 
+    /**
+     * 특정 게시물을 조회하고 이를 GetPostResponse로 전환하는 method
+     * @param postId 게시물 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto
+     */
     public GetPostResponse viewPost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
         post.updateView();
@@ -68,6 +83,11 @@ public class PostServiceImpl implements PostService {
         );
     }
 
+    /**
+     * 그룹에 속한 모든 게시물 중 최신순으로 9개 이하만 가져오는 method
+     * @param partyId 그룹 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto 리스트
+     */
     @Override
     public List<GetPostResponse> getPostListByParty(Long partyId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾지 못했습니다."));
@@ -90,6 +110,11 @@ public class PostServiceImpl implements PostService {
         return responseList;
     }
 
+    /**
+     * 그룹에 속한 모든 게시물 중 조회수가 큰 순으로 9개 이하만 가져오는 method
+     * @param partyId 그룹 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto 리스트
+     */
     @Override
     public List<GetPostResponse> getPostListByViews(Long partyId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new PartyNotFoundException("해당 그룹을 찾지 못했습니다."));
@@ -112,6 +137,11 @@ public class PostServiceImpl implements PostService {
         return responseList;
     }
 
+    /**
+     * 카테고리에 속한 모든 게시물 중 최신순으로 9개 이하만 가져오는 method
+     * @param categoryId 카테고리 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto 리스트
+     */
     public List<GetPostResponse> getPostListByCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
         List<Post> postList = postRepository.findByCategory_CategoryId(category.getCategoryId());
@@ -130,6 +160,11 @@ public class PostServiceImpl implements PostService {
         return responseList;
     }
 
+    /**
+     * 카테고리에 속한 모든 게시물 중 조회수가 큰 순으로 9개 이하만 가져오는 method
+     * @param categoryId 카테고리 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto 리스트
+     */
     @Override
     public List<GetPostResponse> getPostListByCategoryAndViews(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
@@ -149,6 +184,13 @@ public class PostServiceImpl implements PostService {
         return responseList;
     }
 
+    /**
+     * 게시물을 수정하는 method
+     * @param dto title, content, categoryId로 이루어진 dto
+     * @param postId 게시물 아이디
+     * @param userId 사용자 아이디
+     * @return postId, title, content, views, categoryId, userId로 구성된 dto
+     */
     public ModifyPostResponse modifyPost(ModifyPostRequest dto, Long postId, String userId) {
         Post p = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("해당 카테고리를 찾을 수 없습니다."));
@@ -172,6 +214,10 @@ public class PostServiceImpl implements PostService {
         );
     }
 
+    /**
+     * 게시물을 삭제하는 method
+     * @param postId 게시물 아이디
+     */
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("해당 게시물을 찾을 수 없습니다."));
         postRepository.delete(post);
