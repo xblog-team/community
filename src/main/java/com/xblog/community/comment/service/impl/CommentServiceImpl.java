@@ -10,7 +10,7 @@ import com.xblog.community.comment.service.CommentService;
 import com.xblog.community.comment.service.repository.CommentRepository;
 import com.xblog.community.post.entity.Post;
 import com.xblog.community.post.exception.PostNotFoundException;
-import com.xblog.community.post.repository.PostReposiotry;
+import com.xblog.community.post.repository.PostRepository;
 import com.xblog.community.user.entity.User;
 import com.xblog.community.user.exception.UserNotFoundException;
 import com.xblog.community.user.repository.UserRepository;
@@ -28,7 +28,7 @@ import java.util.Objects;
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
-    private final PostReposiotry postReposiotry;
+    private final PostRepository postReposiotry;
 
     @Override
     public void createComment(String userId, AddCommentRequest request) {

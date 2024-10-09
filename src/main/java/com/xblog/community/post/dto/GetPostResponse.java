@@ -10,6 +10,6 @@ public class GetPostResponse {
     private String title;
     private String content;
     private Long views;
-    private Long CategoryId;
+    private Long categoryId;
     private String userId;
 }

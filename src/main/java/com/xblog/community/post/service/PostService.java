@@ -10,8 +10,10 @@ import java.util.List;
 public interface PostService {
     AddPostDto createPost(AddPostDto dto, String userId);
     GetPostResponse viewPost(Long postId);
-    List<GetPostResponse> getPostList(Long categoryId);
+    List<GetPostResponse> getPostListByParty(Long partyId);
     List<GetPostResponse> getPostListByViews(Long partyId);
+    List<GetPostResponse> getPostListByCategory(Long categoryId);
+    List<GetPostResponse> getPostListByCategoryAndViews(Long categoryId);
     ModifyPostResponse modifyPost(ModifyPostRequest dto, Long postId, String userId);
     void deletePost(Long postId);
 }
