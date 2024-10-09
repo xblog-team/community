@@ -5,6 +5,12 @@
 GET {{baseUrl}}/testUser
 Content-Type: application/json
 
+###유저 닉네임 요청
+
+GET {{baseUrl}}/nickname
+Content-Type: application/json
+X-USER-ID: testUser
+
 ###유저 등록
 
 POST {{baseUrl}}/register
